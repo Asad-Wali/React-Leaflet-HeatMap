@@ -4,6 +4,7 @@ import data from '../coordinates.json';
 
 const RectangleList = () => {
     // Assign unique color to each layer
+    // We Assuming that our Coordinate are in sorted Decending order
     const RgbaColor = (index: any) => {
         var letters: string
         if (data.length / 2 < index) {
