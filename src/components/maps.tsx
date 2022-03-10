@@ -38,19 +38,6 @@ const RectangleList = () => {
                                 14
                             );
                         },
-                                // on mouse hover it gives the weight and color to selected area
-                                mouseover(e) {
-                                    e.target.setStyle({
-                                        weight: 2,
-                                        color: RgbaColor(i)
-                                    });
-                                },
-                                // on mouse out it will reset the weight to 0
-                                mouseout(e) {
-                                    e.target.setStyle({
-                                        weight: 0
-                                    });
-                                }
                             })
                             }
                         />
