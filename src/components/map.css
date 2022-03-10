@@ -1,0 +1,7 @@
+.mapBox {
+    color: pink !important;
+}
+.mapBox:hover {
+    color: green !important;
+  }
+

@@ -1,29 +1,22 @@
 import { Rectangle, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import data from '../coordinates.json';
+import './map.css'
 
 const RectangleList = () => {
+    let map = useMap();
+
     // Assign unique color to each layer
-    // We Assuming that our Coordinate are in sorted Decending order
     const RgbaColor = (index: any) => {
-        var letters: string
-        if (data.length / 2 < index) {
-            letters = '01234567';
-        }
-        else {
-            letters = '89ABCDEF';
-        }
-        var color: string = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 7)];
-        }
-        return color;
+        let h = (1.0 - index) * 240
+        return "hsl(" + h + ", 100%, 50%)";
     }
 
-    const map = useMap()
+
     return (
         // draw Ractangle of each coordinate
         <span>
+             {/* We Assuming that our Coordinate are in sorted */}
             {data.map((item, i) => {
                 let northEast = item.northEast.split(',');
                 let southWest = item.southWest.split(',');
@@ -38,28 +31,29 @@ const RectangleList = () => {
                         click: () => {
                             map.setView(
                                 [
+                                    // this will set the center of the rectangular area
                                     (lagx + latx) / 2,
                                     (lagy + laty) / 2
                                 ],
-                                15
+                                14
                             );
                         },
-                        // on mouse hover it gives the weight and color to selected area
-                        mouseover(e) {
-                            e.target.setStyle({
-                                weight:1,
-                                color: RgbaColor(i)
-                            });
-                        },
-                        // on mouse out it reset the weight to 0
-                        mouseout(e) {
-                            e.target.setStyle({
-                                weight:0
-                            });
-                        }
-                    })
-                    }
-                />;
+                                // on mouse hover it gives the weight and color to selected area
+                                mouseover(e) {
+                                    e.target.setStyle({
+                                        weight: 2,
+                                        color: RgbaColor(i)
+                                    });
+                                },
+                                // on mouse out it will reset the weight to 0
+                                mouseout(e) {
+                                    e.target.setStyle({
+                                        weight: 0
+                                    });
+                                }
+                            })
+                            }
+                        />
             })}
         </span>
     );
