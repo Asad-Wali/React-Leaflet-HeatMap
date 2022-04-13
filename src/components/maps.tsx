@@ -12,11 +12,10 @@ const RectangleList = () => {
         return "hsl(" + h + ", 100%, 50%)";
     }
 
-
     return (
         // draw Ractangle of each coordinate
         <span>
-             {/* We Assuming that our Coordinate are in sorted */}
+            {/* We Assuming that our Coordinate are in sorted form */}
             {data.map((item, i) => {
                 let northEast = item.northEast.split(',');
                 let southWest = item.southWest.split(',');
@@ -25,22 +24,31 @@ const RectangleList = () => {
                 let latx = Number(southWest[0]);
                 let laty = Number(southWest[1]);
                 return <Rectangle key={i} bounds={[[lagx, lagy], [latx, laty]]} weight={0} color={RgbaColor(i)}
-                // handling events
+                    // handling events
                     eventHandlers={({
+
                         // on click open the seleted view in full screen mod
                         click: () => {
+                            let zoomFactor;
+                            if (data.length / 2 < i) {
+                                zoomFactor = 16;
+                            }
+                            else {
+                                zoomFactor = 13;
+                            }
+
                             map.setView(
                                 [
                                     // this will set the center of the rectangular area
                                     (lagx + latx) / 2,
                                     (lagy + laty) / 2
                                 ],
-                                14
+                                zoomFactor
                             );
                         },
-                            })
-                            }
-                        />
+                    })
+                    }
+                />
             })}
         </span>
     );

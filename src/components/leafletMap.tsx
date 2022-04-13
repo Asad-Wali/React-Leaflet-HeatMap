@@ -9,8 +9,8 @@ const LeafletMap = () => {
     // this function will helps to find the center of the map
     const getLatLngBounds = () => {
         let tupleArray: Array<LatLngTuple[]> = [];
-        data.map((item)=> {
-            const northEast =  item.northEast.split(",");
+        data.forEach((item) => {
+            const northEast = item.northEast.split(",");
             const southWest = item.southWest.split(",")
             tupleArray.push([
                 [+northEast[0], +northEast[1]],
@@ -18,18 +18,18 @@ const LeafletMap = () => {
             ])
         })
         let tupleAreaCalculateArray: any = [];
-        tupleArray.forEach( (item: number[][]) => {
-            tupleAreaCalculateArray.push([...item ])
+        tupleArray.forEach((item: number[][]) => {
+            tupleAreaCalculateArray.push([...item])
         })
 
         const bounds = L.latLngBounds(tupleAreaCalculateArray);
         let center = bounds.getCenter();
         return center;
-      };
+    };
 
     return (
         // Leaflet Map
-        <MapContainer className="h-screen" center={getLatLngBounds()}  zoom={10} scrollWheelZoom={false}>
+        <MapContainer className="h-screen" center={getLatLngBounds()} zoom={10} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
